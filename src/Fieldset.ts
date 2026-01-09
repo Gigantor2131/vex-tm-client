@@ -135,21 +135,21 @@ export enum FieldsetQueueState {
 
 export type FieldsetMatch =
     | {
-          type: FieldsetActiveMatchType.None;
-      }
+        type: FieldsetActiveMatchType.None;
+    }
     | {
-          type: FieldsetActiveMatchType.Timeout;
-          state: FieldsetQueueState;
-          fieldID: number;
-          active: boolean;
-      }
+        type: FieldsetActiveMatchType.Timeout;
+        state: FieldsetQueueState;
+        fieldID: number;
+        active: boolean;
+    }
     | {
-          type: FieldsetActiveMatchType.Match;
-          state: FieldsetQueueState;
-          match: MatchTuple;
-          fieldID: number;
-          active: boolean;
-      };
+        type: FieldsetActiveMatchType.Match;
+        state: FieldsetQueueState;
+        match: MatchTuple;
+        fieldID: number;
+        active: boolean;
+    };
 
 export type FieldsetState = {
     match: FieldsetMatch;
@@ -410,6 +410,11 @@ export class Fieldset extends EventEmitter implements FieldsetData {
                 } else {
                     try {
                         this.websocket.send(body);
+                        resolve({
+                            success: true,
+                            data: undefined,
+                            cached: false,
+                        });
                     } catch (error) {
                         if (error) {
                             resolve({
